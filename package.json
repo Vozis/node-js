@@ -1,0 +1,27 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "Node JS Fitst Course",
+  "main": "helloworld.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vozis/node-js.git"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vozis/node-js/issues"
+  },
+  "homepage": "https://github.com/Vozis/node-js#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "eslint": "^8.27.0"
+  }
+}
