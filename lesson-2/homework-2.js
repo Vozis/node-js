@@ -45,7 +45,7 @@ const timerStart = (endDate) => {
 };
 
 const timer = setInterval(() => {
-  emitter.emit("timerStart", endDate);
+  emitter.emit("timerStart");
 }, 1000);
 
 const timerEnd = (timer) => {
@@ -53,7 +53,7 @@ const timerEnd = (timer) => {
   console.log("timer end");
 };
 
-emitter.on("timerStart", timerStart);
+emitter.on("timerStart", () => timerStart(endDate));
 emitter.on("timerEnd", () => {
   timerEnd(timer);
 });
