@@ -1,6 +1,6 @@
 import colors from "colors";
 
-// const [n1, n2] = process.argv.splice(2);
+const [n1, n2] = process.argv.splice(2);
 
 const getNormalNumbers = (n1, n2) => {
   let isValid = false;
@@ -39,49 +39,49 @@ const getNormalNumbers = (n1, n2) => {
   }
 };
 
-// getNormalNumbers(n1, n2);
+getNormalNumbers(n1, n2);
 
-const [from, to] = process.argv.slice(2).map((item) => parseInt(item));
+// const [from, to] = process.argv.slice(2).map((item) => parseInt(item));
 
-if (isNaN(from) || isNaN(to)) {
-  console.log("Принимаемые аргументы должны быть числами");
-}
+// if (isNaN(from) || isNaN(to)) {
+//   console.log("Принимаемые аргументы должны быть числами");
+// }
 
-const isNormal = (num) => {
-  if (num <= 1) {
-    return false;
-  }
+// const isNormal = (num) => {
+//   if (num <= 1) {
+//     return false;
+//   }
 
-  let i = 2;
-  while (i < num) {
-    if (num % i === 0) return false;
-    i++;
-  }
-  return true;
-};
+//   let i = 2;
+//   while (i < num) {
+//     if (num % i === 0) return false;
+//     i++;
+//   }
+//   return true;
+// };
 
-let index = 0;
-const colorPrint = (num) => {
-  const collect = ["green", "yellow", "red"];
+// let index = 0;
+// const colorPrint = (num) => {
+//   const collect = ["green", "yellow", "red"];
 
-  console.log(colors[collect[index]](num));
-  if (index === collect.length - 1) {
-    index = 0;
-  } else {
-    index++;
-  }
-};
+//   console.log(colors[collect[index]](num));
+//   if (index === collect.length - 1) {
+//     index = 0;
+//   } else {
+//     index++;
+//   }
+// };
 
-let i = from;
-let exists = false;
-while (i <= to) {
-  if (isNormal(i)) {
-    colorPrint(i);
-    exists = true;
-  }
-  i++;
-}
+// let i = from;
+// let exists = false;
+// while (i <= to) {
+//   if (isNormal(i)) {
+//     colorPrint(i);
+//     exists = true;
+//   }
+//   i++;
+// }
 
-if (!exists) {
-  console.log("No digital diapason");
-}
+// if (!exists) {
+//   console.log("No digital diapason");
+// }
