@@ -4,11 +4,16 @@
   "description": "Node JS Fitst Course",
   "main": "helloworld.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "read": "node ./lesson-4/3-readWithYargs.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Vozis/node-js.git"
+  },
+  "bin": {
+    "reader": "./lesson-4/8-cli.js",
+    "homework": "./lesson-4/homework-4.js"
   },
   "type": "module",
   "author": "",
@@ -18,7 +23,9 @@
   },
   "homepage": "https://github.com/Vozis/node-js#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^9.1.4",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
