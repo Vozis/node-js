@@ -24,25 +24,11 @@ rl.question("please enter the path to the file: ", (filePath) => {
   getFiles(dirName);
 });
 
-rl.question("Enter search request: ", (searchRequest) => {
-  getDataFromRequest(searchRequest);
-});
-
-const getDataFromRequest = (searchRequest) => {
-  rl.on("line", (line) => {
-    if (line.includes(searchRequest)) {
-      colors.red(line);
-    }
-    console.log(line);
-  });
-};
-
-// Ниже рабочий код )
-
 const getFiles = (dirPath) => {
   return fsp
     .readdir(dirPath, { withFileTypes: true })
     .then((list) => {
+      console.log(list);
       return inquirer.prompt([
         {
           name: "fileName",

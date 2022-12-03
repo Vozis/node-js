@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Vozis/node-js#readme",
   "dependencies": {
     "colors": "^1.4.0",
+    "formidable": "^2.0.1",
     "inquirer": "^9.1.4",
     "yargs": "^17.6.2"
   },
