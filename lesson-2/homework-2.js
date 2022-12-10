@@ -1,5 +1,14 @@
+import EventEmitter from "events";
+
 const userDateString = process.argv.splice(2).toString();
-const [hour, day, month, year] = userDateString.split("-").map((item) => +item);
+
+const getDate = (userDateString) => {
+  const [hour, day, month, year] = userDateString
+    .split("-")
+    .map((item) => +item);
+
+  return new Date(year, month - 1, day - 1, hour, 0, 0);
+};
 
 const isTrue = (condition, type) => {
   if (condition) {
@@ -8,34 +17,43 @@ const isTrue = (condition, type) => {
   return "";
 };
 
-const createTimer = () => {
-  const endDate = new Date(year, month - 1, day - 1, hour, 0, 0);
+const emitter = new EventEmitter();
+const endDate = getDate(userDateString);
 
-  const timer = setInterval(() => {
-    const currentDate = new Date();
-    const isTimerEnd = endDate - currentDate;
+const timerStart = (endDate) => {
+  const currentDate = new Date();
+  const isTimerEnd = endDate - currentDate;
 
-    // console.log(timeLeft);
-    if (isTimerEnd <= 0) {
-      console.log("timer end");
-      clearInterval(timer);
-    } else {
-      const timeLeft = new Date(isTimerEnd);
+  if (isTimerEnd <= 0) {
+    emitter.emit("timerEnd");
+  } else {
+    const timeLeft = new Date(isTimerEnd);
+    const res = `${isTrue(timeLeft.getUTCFullYear() - 1970, "year")} ${isTrue(
+      timeLeft.getUTCMonth(),
+      "month",
+    )} ${isTrue(timeLeft.getUTCDate(), "days")} ${isTrue(
+      timeLeft.getUTCHours(),
+      "hour",
+    )} ${isTrue(timeLeft.getUTCMinutes(), "minutes")} ${isTrue(
+      timeLeft.getUTCSeconds(),
+      "seconds",
+    )}.`;
 
-      const res = `${isTrue(timeLeft.getUTCFullYear() - 1970, "year")} ${isTrue(
-        timeLeft.getUTCMonth(),
-        "month",
-      )} ${isTrue(timeLeft.getUTCDate(), "days")} ${isTrue(
-        timeLeft.getUTCHours(),
-        "hour",
-      )} ${isTrue(timeLeft.getUTCMinutes(), "minutes")} ${isTrue(
-        timeLeft.getUTCSeconds(),
-        "seconds",
-      )}.`;
-
-      console.log(res);
-    }
-  }, 1000);
+    console.clear();
+    console.log(res);
+  }
 };
 
-createTimer();
+const timer = setInterval(() => {
+  emitter.emit("timerStart");
+}, 1000);
+
+const timerEnd = (timer) => {
+  clearInterval(timer);
+  console.log("timer end");
+};
+
+emitter.on("timerStart", () => timerStart(endDate));
+emitter.on("timerEnd", () => {
+  timerEnd(timer);
+});
