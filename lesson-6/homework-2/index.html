@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Mfc logs</title>
+    <script
+      src="https://cdn.socket.io/4.5.4/socket.io.min.js"
+      integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <h1>Messanger</h1>
+    <input type="text" id="input" autofocus />
+    <button type="submit" id="send">Send</button>
+    <div id="messages"></div>
+    <ul id="fileList">
+      #links#
+    </ul>
+    <div id="file"></div>
+  </body>
+  <script type="text/javascript">
+    const socket = io("localhost:3001");
+    const input = document.getElementById("input");
+    const btn = document.getElementById("send");
+    const btnFile = document.querySelectorAll("file");
+    const fileList = document.getElementById("fileList");
+
+    socket.on("connect", () => {
+      console.log("Connection with localhost:3001 created");
+    });
+
+    socket.on("server-msg", ({ msg }) => {
+      const msgSpan = (document.createElement("span").innerHTML = msg);
+      document.getElementById("messages").append(msgSpan);
+      document.getElementById("messages").append(document.createElement("br"));
+    });
+
+    btnFile.forEach((btn) => {
+      btn.onclick = function () {
+        log(btn);
+      };
+      socket.emit("click-to-file", {
+        msg: btn.innerHTML,
+      });
+    });
+
+    btn.onclick = function () {
+      socket.emit("search-text", {
+        msg: input.value,
+      });
+      input.value = "";
+    };
+  </script>
+</html>

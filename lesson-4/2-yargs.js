@@ -1,0 +1,12 @@
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+
+const options = yargs(hideBin(process.argv))
+  .usage("Usage: -p <path>")
+  .options("p", {
+    alias: "path",
+    describe: "Path to file",
+    demandOption: true,
+  }).argv;
+
+console.log(options);

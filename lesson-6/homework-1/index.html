@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Messanger</title>
+  </head>
+
+  <body>
+    <h1>Messanger</h1>
+    <input type="text" id="input" autofocus />
+    <button type="submit" id="send">Send</button>
+    <div style="display: flex; justify-content: space-between" id="block">
+      <div id="notifications">
+        <h3>List of notifications</h3>
+      </div>
+      <div id="messages">
+        <h3>List of messages</h3>
+      </div>
+      <div id="users">
+        <h3>List of online users</h3>
+        <ul id="userList"></ul>
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+
+    const socket = io("http://localhost:3000");
+    const input = document.getElementById("input");
+    const btn = document.getElementById("send");
+    const userPreview = document.getElementById("userList");
+    const msgPreview = document.getElementById("messages");
+    const notePreview = document.getElementById("notifications");
+    const block = document.getElementById("block");
+
+    const addMessage = (client, data) => {
+      const mess = `${client}: ${data.msg}`;
+      const msgSpan = (document.createElement("span").innerHTML = mess);
+      msgPreview.append(msgSpan);
+      msgPreview.append(document.createElement("br"));
+    };
+
+    socket.on("connect", () => {
+      console.log("Connection with localhost:3001 created");
+    });
+
+    socket.emit("login", {
+      room: "online",
+    });
+
+    socket.on("notification", ({ msg }) => {
+      const msgSpan = (document.createElement("span").innerHTML = msg);
+      notePreview.append(msgSpan);
+      notePreview.append(document.createElement("br"));
+    });
+
+    socket.on("clients", (clients) => {
+      let msg = "";
+      userPreview.innerHTML = "";
+      clients.forEach((client) => {
+        msg = client.name;
+        const userSpan = (document.createElement("li").innerHTML = msg);
+        userPreview.append(userSpan);
+        userPreview.append(document.createElement("br"));
+      });
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Connection left");
+    });
+
+    socket.on("send message", ({ data, client }) => {
+      addMessage(client, data);
+    });
+
+    btn.onclick = function () {
+      socket.emit("client-msg", {
+        msg: input.value,
+      });
+      input.value = "";
+    };
+  </script>
+</html>
